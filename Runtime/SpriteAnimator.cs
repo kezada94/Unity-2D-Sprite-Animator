@@ -7,6 +7,7 @@ namespace GabrielBigardi.SpriteAnimator
     public class SpriteAnimator : MonoBehaviour
     {
         [SerializeField] private bool _playAutomatically = false;
+        [SerializeField] private float _animationSpeedMultiplier = 1f;
         [SerializeField] private SpriteAnimationObject _spriteAnimationObject;
         [SerializeField] private SpriteRenderer _spriteRenderer;
         public SpriteAnimationObject SpriteAnimationObject => _spriteAnimationObject;
@@ -242,6 +243,8 @@ namespace GabrielBigardi.SpriteAnimator
         /// <param name="time"></param>
         public void SetCurrentAnimationTime(float time) => _animationTime = time;
 
+        public float GetAnimationSpeedMultiplier() => _animationSpeedMultiplier;
+        public void SetAnimationSpeedMultiplier(float multiplier) => _animationSpeedMultiplier = multiplier;
         /// <summary>
         /// Changes the sprite animation object
         /// </summary>
@@ -279,7 +282,7 @@ namespace GabrielBigardi.SpriteAnimator
             {
                 if (!_animationCompleted)
                 {
-                    _animationTime += deltaTime * _currentAnimation.FPS;
+                    _animationTime += deltaTime * _animationSpeedMultiplier * _currentAnimation.FPS;
 
                     var frameDuration = 1f / _currentAnimation.FPS;
                     var animationDuration = frameDuration * (_currentAnimation.Frames.Count);
